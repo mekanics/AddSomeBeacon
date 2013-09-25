@@ -7,8 +7,11 @@
 //
 
 #import "AJBeaconListViewController.h"
+#import "AJBeaconMonitor.h"
 
 @interface AJBeaconListViewController ()
+
+@property (nonatomic, retain) AJBeaconMonitor *beaconMonitor;
 
 @end
 
@@ -26,6 +29,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setTitle: @"Beacons"];
+    
+    CLRegion *region = [[CLRegion alloc] init];
+    _beaconMonitor = [[AJBeaconMonitor alloc] initWithRegion:region];
+    
+    [_beaconMonitor startMonitoring];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

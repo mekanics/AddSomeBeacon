@@ -20,6 +20,8 @@
 		190E908817F1A889006BA182 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 190E908617F1A889006BA182 /* InfoPlist.strings */; };
 		190E908A17F1A889006BA182 /* AddSomeBeaconTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 190E908917F1A889006BA182 /* AddSomeBeaconTests.m */; };
 		190E909A17F1AF00006BA182 /* AJBeaconListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 190E909917F1AF00006BA182 /* AJBeaconListViewController.m */; };
+		B156EBD117F1F0E600968B1B /* AJBeaconMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = B156EBD017F1F0E600968B1B /* AJBeaconMonitor.m */; };
+		B156EBD317F1F25600968B1B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B156EBD217F1F25600968B1B /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,9 @@
 		190E908917F1A889006BA182 /* AddSomeBeaconTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddSomeBeaconTests.m; sourceTree = "<group>"; };
 		190E909817F1AF00006BA182 /* AJBeaconListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJBeaconListViewController.h; sourceTree = "<group>"; };
 		190E909917F1AF00006BA182 /* AJBeaconListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJBeaconListViewController.m; sourceTree = "<group>"; };
+		B156EBCF17F1F0E600968B1B /* AJBeaconMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJBeaconMonitor.h; sourceTree = "<group>"; };
+		B156EBD017F1F0E600968B1B /* AJBeaconMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJBeaconMonitor.m; sourceTree = "<group>"; };
+		B156EBD217F1F25600968B1B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B156EBD317F1F25600968B1B /* CoreLocation.framework in Frameworks */,
 				190E906717F1A889006BA182 /* CoreGraphics.framework in Frameworks */,
 				190E906917F1A889006BA182 /* UIKit.framework in Frameworks */,
 				190E906517F1A889006BA182 /* Foundation.framework in Frameworks */,
@@ -99,6 +105,7 @@
 		190E906317F1A889006BA182 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B156EBD217F1F25600968B1B /* CoreLocation.framework */,
 				190E906417F1A889006BA182 /* Foundation.framework */,
 				190E906617F1A889006BA182 /* CoreGraphics.framework */,
 				190E906817F1A889006BA182 /* UIKit.framework */,
@@ -110,6 +117,7 @@
 		190E906A17F1A889006BA182 /* AddSomeBeacon */ = {
 			isa = PBXGroup;
 			children = (
+				B156EBCE17F1F0BC00968B1B /* Class */,
 				190E909B17F1AF20006BA182 /* Model */,
 				190E909417F1A972006BA182 /* View */,
 				190E909317F1A957006BA182 /* ViewController */,
@@ -173,6 +181,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		B156EBCE17F1F0BC00968B1B /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				B156EBCF17F1F0E600968B1B /* AJBeaconMonitor.h */,
+				B156EBD017F1F0E600968B1B /* AJBeaconMonitor.m */,
+			);
+			path = Class;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -221,6 +238,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Alexandre Joly";
 				TargetAttributes = {
+					190E906017F1A889006BA182 = {
+						DevelopmentTeam = 6XXTWD5ZUF;
+					};
 					190E907B17F1A889006BA182 = {
 						TestTargetID = 190E906017F1A889006BA182;
 					};
@@ -272,6 +292,7 @@
 				190E909A17F1AF00006BA182 /* AJBeaconListViewController.m in Sources */,
 				190E907117F1A889006BA182 /* main.m in Sources */,
 				190E907517F1A889006BA182 /* AJAppDelegate.m in Sources */,
+				B156EBD117F1F0E600968B1B /* AJBeaconMonitor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,10 +411,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AddSomeBeacon/AddSomeBeacon-Prefix.pch";
 				INFOPLIST_FILE = "AddSomeBeacon/AddSomeBeacon-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -403,10 +427,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AddSomeBeacon/AddSomeBeacon-Prefix.pch";
 				INFOPLIST_FILE = "AddSomeBeacon/AddSomeBeacon-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -472,6 +499,7 @@
 				190E908F17F1A889006BA182 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		190E909017F1A889006BA182 /* Build configuration list for PBXNativeTarget "AddSomeBeaconTests" */ = {
 			isa = XCConfigurationList;
@@ -480,6 +508,7 @@
 				190E909217F1A889006BA182 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
