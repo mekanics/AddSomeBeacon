@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AJBeaconMonitor.h"
 
-@interface AJBeaconListViewController : UITableViewController
+@interface AJBeaconListViewController : UITableViewController <AJBeaconMonitorDelegate>
+
+@property (nonatomic, retain) NSArray* dataSource;
 
 @end

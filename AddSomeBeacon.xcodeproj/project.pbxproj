@@ -240,6 +240,11 @@
 				TargetAttributes = {
 					190E906017F1A889006BA182 = {
 						DevelopmentTeam = 6XXTWD5ZUF;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					190E907B17F1A889006BA182 = {
 						TestTargetID = 190E906017F1A889006BA182;

@@ -14,6 +14,9 @@
     BOOL isMonitoring;
 }
 
+@property (nonatomic, retain) NSUUID *uuid;
+@property (nonatomic, retain) NSString *identifier;
+
 @property (nonatomic, retain) CLBeaconRegion *beaconRegion;
 @property (nonatomic, retain) CLRegion *region;
 @property (nonatomic, retain) CLLocationManager *locationManager;
@@ -22,10 +25,11 @@
 
 @implementation AJBeaconMonitor
 
-- (id)initWithRegion:(CLRegion*)region {
+- (id)initWithUUID:(NSUUID*)uuid andIdentifier:(NSString*)identifier {
     
     if (self = [super init]) {
-        _region = region;
+        _uuid = uuid;
+        _identifier = identifier;
         
         [self setup];
     }
@@ -35,43 +39,72 @@
 }
 
 - (void)setup {
-    NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"a-very-awesome-uuid"];
-    NSString *identifier = @"mmmhBeacon";
-    
-    _beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:identifier];
-    
-    _locationManager = [CLLocationManager new];
+    _beacons = [[NSArray alloc] init];
+
+    _beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:_uuid identifier:_identifier];
+
+    _beaconRegion.notifyEntryStateOnDisplay = YES;
+    _beaconRegion.notifyOnEntry = YES;
+    _beaconRegion.notifyOnExit = YES;
+
+
+    _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;
 }
 
 - (void)startMonitoring {
     NSLog(@"startMonitoring");
-    if (!isMonitoring) {
-        [_locationManager startMonitoringForRegion:_beaconRegion];
-        isMonitoring = YES;
-    }
+    [_locationManager startMonitoringForRegion:_beaconRegion];
+    isMonitoring = YES;
 }
 
 - (void)stopMonitoring {
+    NSLog(@"stopMonitoring");
     [_locationManager stopMonitoringForRegion:_beaconRegion];
     isMonitoring = NO;
 }
 
 #pragma mark - CLLocationManagerDelegate
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    NSLog(@"%@", locations);
-}
-
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
     NSLog(@"didEnterRegion");
+
+    if ([region.identifier isEqualToString:@"MyBeacon"]) {
+        [_locationManager startRangingBeaconsInRegion:(CLBeaconRegion *)region];
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
     NSLog(@"didExitRegion");
+
+    [_locationManager stopRangingBeaconsInRegion:(CLBeaconRegion *)region];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region {
     NSLog(@"didRangeBeacons");
+
+    if ([beacons count] > 0) {
+        CLBeacon *nearest = [beacons objectAtIndex:0];
+        if (CLProximityImmediate == nearest.proximity) {
+            NSLog(@"immediate");
+        } else if (CLProximityNear == nearest.proximity) {
+            NSLog(@"near");
+        } else if (CLProximityFar == nearest.proximity) {
+            NSLog(@"far");
+        } else if (CLProximityUnknown == nearest.proximity) {
+            NSLog(@"unknow");
+        }
+
+        NSLog(@"rssi: %d", nearest.rssi);
+
+    } else {
+        NSLog(@"not beacons");
+    }
+
+    _beacons = [beacons copy];
+
+    if (_delegate)
+        [_delegate beaconMonitorDidRangeBeacons:self];
+
 }
 @end
